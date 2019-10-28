@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ScripturePower</string>
+    <string name="menu_browse">Browse</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_settings">Settings</string>
+    <string-array name="font_sizes">
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>22</item>
+    </string-array>
+</resources>
