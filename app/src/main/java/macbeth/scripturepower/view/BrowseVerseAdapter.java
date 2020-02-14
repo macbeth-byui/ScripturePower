@@ -10,20 +10,17 @@ import android.widget.TextView;
 import java.util.List;
 
 import macbeth.scripturepower.R;
+import macbeth.scripturepower.model.Config;
 import macbeth.scripturepower.model.Verse;
 
 public class BrowseVerseAdapter extends RecyclerView.Adapter<BrowseVerseAdapter.ViewHolder> {
 
     private List<Verse> data;
-    int fontSize;
+    private Config config;
 
-    public BrowseVerseAdapter(List<Verse> data, int fontSize) {
+    public BrowseVerseAdapter(List<Verse> data, Config config) {
         this.data = data;
-        this.fontSize = fontSize;
-    }
-
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
+        this.config = config;
     }
 
     @NonNull
@@ -36,7 +33,7 @@ public class BrowseVerseAdapter extends RecyclerView.Adapter<BrowseVerseAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull BrowseVerseAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.getTvText().setTextSize(fontSize);
+        viewHolder.getTvText().setTextSize(config.getFontSize());
         viewHolder.getTvText().setText(data.get(i).getVerse()+". "+data.get(i).getText());
     }
 

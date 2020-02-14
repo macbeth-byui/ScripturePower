@@ -11,10 +11,6 @@ public class Book {
     @SerializedName(value="book", alternate = {"title"})
     private String title;
 
-    public Book() {
-        chapters = new ArrayList<Chapter>();
-    }
-
     public Chapter getChapter(int chapter) {
         if (chapter <= 0 || chapter > chapters.size())
             return null;

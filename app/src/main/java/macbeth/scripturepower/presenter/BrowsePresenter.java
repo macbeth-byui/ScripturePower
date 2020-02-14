@@ -1,5 +1,7 @@
 package macbeth.scripturepower.presenter;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +20,8 @@ public class BrowsePresenter {
     private List<String> validChapters;
     private List<Verse> validVerses;
 
-    public BrowsePresenter(MainPresenter presenter) {
-        library = presenter.getLibrary();
+    public BrowsePresenter() {
+        library = null; // The library is set by the Fragment when the MainPresenter sends notification that the data is ready.
         selectedVolume = null;
         selectedBook = null;
         selectedChapter = null;
@@ -28,9 +30,25 @@ public class BrowsePresenter {
         validVerses = new ArrayList<Verse>();
     }
 
+    public void setLibrary(Library library) {
+        this.library = library;
+    }
+
     // Functions for Fragment Requests
 
+    public void selectScripture(String reference) {
+        String[] split = reference.split(":");
+        int verse = Integer.parseInt(split[1]);
+        int posChapter = split[0].lastIndexOf(" ");
+        String chapter = split[0].substring(posChapter+1);
+        String book = split[0].substring(0,posChapter);
+        Log.d("split",book + " : " + chapter + " : " + verse);
+    }
+
     public void selectVolume(String volume) {
+        if (library == null) {
+            return;
+        }
         selectedVolume = library.getVolume(volume);
         if (selectedVolume != null) {
             validBooks.clear();
@@ -41,6 +59,9 @@ public class BrowsePresenter {
     }
 
     public void selectBook(String book) {
+        if (library == null) {
+            return;
+        }
         if (selectedVolume == null) {
             return;
         }
@@ -53,6 +74,9 @@ public class BrowsePresenter {
     }
 
     public void selectChapter(String chapterStr) {
+        if (library == null) {
+            return;
+        }
         int chapter = 0;
         try {
             chapter = Integer.parseInt(chapterStr);

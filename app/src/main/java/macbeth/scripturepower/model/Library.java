@@ -16,14 +16,12 @@ public class Library {
     private Gson gson;
     private HTTPHelper httpHelper;
     private FileHelper fileHelper;
-//    private SharedPreferences sharedPreferences;
 
     public Library(Context context) {
         volumes = new ArrayList<Volume>();
         gson = new Gson();
         httpHelper = new HTTPHelper();
         fileHelper = new FileHelper(context);
-//        sharedPreferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
     }
 
     public void loadVolume(String title, String url, boolean hasBooks) {
@@ -38,7 +36,7 @@ public class Library {
             try {
                 volume = gson.fromJson(data, Volume.class);
             }
-            catch (JsonSyntaxException jse) {
+            catch (JsonSyntaxException jse) { // Redownload if the JSON file is corrupted
                 data = httpHelper.readHTTP(url);
                 volume = gson.fromJson(data, Volume.class);
             }

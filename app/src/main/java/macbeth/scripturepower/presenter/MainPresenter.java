@@ -37,14 +37,14 @@ public class MainPresenter {
     public void registerUsers(MainPresenter.Listener dataUser) {
         registeredUsers.add(dataUser);
         if (libraryReady) {
-            dataUser.notifyDataReady();
+            dataUser.notifyDataReady(library, config);
         }
     }
 
     public void notifyUsersDataReady() {
         libraryReady = true;
         for (MainPresenter.Listener dataUser : registeredUsers) {
-            dataUser.notifyDataReady();
+            dataUser.notifyDataReady(library, config);
         }
     }
 
@@ -67,7 +67,7 @@ public class MainPresenter {
     }
 
     public interface Listener {
-        public void notifyDataReady();
+        public void notifyDataReady(Library library, Config config);
         public void notifyConfigChanged();
     }
 

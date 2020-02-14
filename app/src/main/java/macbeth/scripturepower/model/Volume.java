@@ -8,9 +8,9 @@ public class Volume {
     private List<Book> books;
     private String title;
 
-
     public Volume() {
         books = new ArrayList<Book>();
+        title = "";
     }
 
     public Book getBook(String name) {

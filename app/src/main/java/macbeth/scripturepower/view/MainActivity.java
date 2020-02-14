@@ -11,8 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import macbeth.scripturepower.R;
+import macbeth.scripturepower.model.SearchRecord;
 import macbeth.scripturepower.presenter.MainPresenter;
+
+// TODO: Remember fragment you were in before and start there
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,33 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {  // View
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {  // Interact
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {  // No Interact ... release onResume
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() { // No View ... Good place to save .. release onStart
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() { // Release onCreate
-        super.onDestroy();
+    public void registerFragment(MainPresenter.Listener fragment) {
+        presenter.registerUsers(fragment);
     }
 
     private void loadFragment(int menuId) {
         ActionBar actionBar = getSupportActionBar();
+
         switch (menuId) {
             case R.id.menu_browse :
                 viewPager.setCurrentItem(0);
@@ -88,14 +76,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void loadBrowseScripture(SearchRecord record) {
+        loadFragment(R.id.menu_browse);
+        ((BrowseFragment)adapter.getFragment(0)).jumpToScripture(record);
+    }
+
     public MainPresenter getPresenter() {
         return presenter;
     }
 
     private class CollectionPagerAdapter extends FragmentPagerAdapter {
 
+        private Map<Integer,Fragment> fragments;
+
         public CollectionPagerAdapter(FragmentManager fm) {
             super(fm);
+            fragments = new HashMap<>();
         }
 
         @Override
@@ -105,12 +101,15 @@ public class MainActivity extends AppCompatActivity {
             switch(i) {
                 case 0:
                     fragment = new BrowseFragment();
+                    fragments.put(i, fragment);
                     break;
                 case 1:
                     fragment = new SearchFragment();
+                    fragments.put(i, fragment);
                     break;
                 case 2:
                     fragment = new SettingsFragment();
+                    fragments.put(i, fragment);
                     break;
 
                 default:
@@ -122,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return 3;
+        }
+
+        public Fragment getFragment(int i) {
+            return fragments.get(i);
         }
 
     }
