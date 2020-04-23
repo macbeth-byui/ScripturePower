@@ -1,21 +1,18 @@
 package macbeth.scripturepower.view;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import macbeth.scripturepower.R;
 import macbeth.scripturepower.model.Config;
 import macbeth.scripturepower.model.SearchResult;
-import macbeth.scripturepower.model.Verse;
 
 public class SearchVerseAdapter extends RecyclerView.Adapter<SearchVerseAdapter.ViewHolder> {
 

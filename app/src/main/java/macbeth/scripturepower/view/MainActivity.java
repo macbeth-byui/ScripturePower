@@ -1,19 +1,21 @@
 package macbeth.scripturepower.view;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.Window;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;  // TODO: Use ViewPager2 and FragmentStateAdapter
+import androidx.viewpager.widget.ViewPager;
+
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import macbeth.scripturepower.R;
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Remove the title bar to provide more room for the app
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getSupportActionBar().hide();
+
         setContentView(R.layout.activity_main);
 
         presenter = new MainPresenter(this);
@@ -39,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CollectionPagerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.fragment);
         viewPager.setAdapter(adapter);
+
+
 
         loadFragment(R.id.menu_browse);
 
@@ -53,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+ /*   @Override
+    protected void onStop() {
+        super.onStop();
+        BrowseFragment fragment = ((BrowseFragment)adapter.getFragment(0));
+        if (fragment != null) {
+            fragment.rememberScripture();
+        }
+    }*/
+
     public void registerFragment(MainPresenter.Listener fragment) {
         presenter.registerUsers(fragment);
     }
@@ -63,15 +81,15 @@ public class MainActivity extends AppCompatActivity {
         switch (menuId) {
             case R.id.menu_browse :
                 viewPager.setCurrentItem(0);
-                actionBar.setTitle("Browse Scriptures");
+                //actionBar.setTitle("Browse Scriptures");
                 break;
             case R.id.menu_search :
                 viewPager.setCurrentItem(1);
-                actionBar.setTitle("Search Scriptures");
+                //actionBar.setTitle("Search Scriptures");
                 break;
             case R.id.menu_settings :
                 viewPager.setCurrentItem(2);
-                actionBar.setTitle("Settings");
+                //actionBar.setTitle("Settings");
                 break;
         }
     }
@@ -87,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class CollectionPagerAdapter extends FragmentPagerAdapter {
 
-        private Map<Integer,Fragment> fragments;
+        private Map<Integer, Fragment> fragments;
 
         public CollectionPagerAdapter(FragmentManager fm) {
             super(fm);

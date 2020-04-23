@@ -1,15 +1,6 @@
 package macbeth.scripturepower.view;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,11 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +26,9 @@ import macbeth.scripturepower.R;
 import macbeth.scripturepower.model.Config;
 import macbeth.scripturepower.model.Library;
 import macbeth.scripturepower.model.SearchRecord;
-import macbeth.scripturepower.model.Verse;
 import macbeth.scripturepower.presenter.MainPresenter;
 import macbeth.scripturepower.presenter.SearchPresenter;
 
-// TODO: Click to view in Browse view (move to top)
 // TODO: Create a waiting spinner and turn off when data is ready
 
 public class SearchFragment extends Fragment implements MainPresenter.Listener {

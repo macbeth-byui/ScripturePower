@@ -1,13 +1,14 @@
 package macbeth.scripturepower.view;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import macbeth.scripturepower.R;
 import macbeth.scripturepower.model.Config;
@@ -82,7 +83,7 @@ public class SettingsFragment extends Fragment implements MainPresenter.Listener
     /**
      * This will get called when we change the config but since we are the ones who changed it, we don't
      * need to do anything.
-     * @param config
+     * @param
      */
     @Override
     public void notifyConfigChanged() {

@@ -8,6 +8,7 @@ import java.util.List;
 import macbeth.scripturepower.model.Book;
 import macbeth.scripturepower.model.Chapter;
 import macbeth.scripturepower.model.Library;
+import macbeth.scripturepower.model.SearchRecord;
 import macbeth.scripturepower.model.Verse;
 import macbeth.scripturepower.model.Volume;
 
@@ -109,4 +110,15 @@ public class BrowsePresenter {
         return validVerses;
     }
 
+    public Volume getSelectedVolume() {
+        return selectedVolume;
+    }
+
+    public Book getSelectedBook() {
+        return selectedBook;
+    }
+
+    public Chapter getSelectedChapter() {
+        return selectedChapter;
+    }
 }

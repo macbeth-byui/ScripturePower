@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
 
-    <android.support.v7.widget.SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/tv_search_term"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:text="TextView"
         android:textAlignment="center" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite_results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

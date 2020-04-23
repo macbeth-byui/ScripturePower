@@ -3,14 +3,15 @@ package macbeth.scripturepower.view;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import macbeth.scripturepower.R;
 import macbeth.scripturepower.model.Config;
@@ -19,7 +20,6 @@ import macbeth.scripturepower.model.SearchRecord;
 import macbeth.scripturepower.presenter.BrowsePresenter;
 import macbeth.scripturepower.presenter.MainPresenter;
 
-// TODO: Auto Book Mark
 // TODO: Highlight selected volume, book, and chapter
 // TODO: Create a waiting spinner and turn off when data is ready
 
@@ -93,6 +93,14 @@ public class BrowseFragment extends Fragment implements MainPresenter.Listener {
         }, browsePresenter.getValidChapters()));
 
         rvVerse.setAdapter(new BrowseVerseAdapter(browsePresenter.getValidVerses(),config));
+
+        recallScripture();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        rememberScripture();
     }
 
     @Override
@@ -114,8 +122,37 @@ public class BrowseFragment extends Fragment implements MainPresenter.Listener {
         browsePresenter.selectChapter(String.valueOf(record.getChapter().getChapter()));
         updateAdapters();
         rvVerse.scrollToPosition(record.getVerse().getVerse()-1);
+    }
 
+    public void rememberScripture() {
+        if (browsePresenter.getSelectedVolume() != null &&
+            browsePresenter.getSelectedBook() != null &&
+            browsePresenter.getSelectedChapter() != null) {
 
+            int position = ((LinearLayoutManager) (rvVerse.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
+            SharedPreferences sp = getActivity().getSharedPreferences("REMEMBER_SCRIPTURE", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("VOLUME", browsePresenter.getSelectedVolume().getTitle());
+            editor.putString("BOOK", browsePresenter.getSelectedBook().getTitle());
+            editor.putString("CHAPTER", String.valueOf(browsePresenter.getSelectedChapter().getChapter()));
+            editor.putInt("VERSE", position + 1);
+            editor.commit();
+        }
+    }
+
+    public void recallScripture() {
+        SharedPreferences sp = getActivity().getSharedPreferences("REMEMBER_SCRIPTURE", Context.MODE_PRIVATE);
+        String volume = sp.getString("VOLUME", "");
+        String book = sp.getString("BOOK", "");
+        String chapter = sp.getString("CHAPTER", "");
+        int verse = sp.getInt("VERSE", 0);
+        if (!volume.contentEquals("")) {
+            browsePresenter.selectVolume(volume);
+            browsePresenter.selectBook(book);
+            browsePresenter.selectChapter(chapter);
+            updateAdapters();
+            rvVerse.scrollToPosition(verse-1);
+        }
     }
 
 }
