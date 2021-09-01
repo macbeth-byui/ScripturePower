@@ -34,6 +34,12 @@ public class BrowseVerseAdapter extends RecyclerView.Adapter<BrowseVerseAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull BrowseVerseAdapter.ViewHolder viewHolder, int i) {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("CLICKED!!! "+i);
+            }
+        });
         viewHolder.getTvText().setTextSize(config.getFontSize());
         viewHolder.getTvText().setText(data.get(i).getVerse()+". "+data.get(i).getText());
     }
